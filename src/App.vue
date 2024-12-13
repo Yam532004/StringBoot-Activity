@@ -1,10 +1,6 @@
 
 
 <template>
-  <header>
-
-  </header>
-
   <RouterView />
 </template>
 
@@ -48,7 +44,7 @@ nav a:first-of-type {
   header {
     display: flex;
     place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+    padding-right: calc(var(--section-gap));
   }
 
   .logo {
