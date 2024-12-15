@@ -1,4 +1,76 @@
+
 <template>
+  <div id="app" class="container mt-5">
+    <!-- Tiêu đề -->
+    <h4 class="mb-4">Tìm kiếm nhân viên</h4>
+    <form @submit.prevent="onSearch">
+        <!-- Hàng 1 -->
+        <div class="row mb-3">
+            <!-- Tên -->
+            <div class="col-md-4">
+                <label for="name" class="form-label">Tên (Tìm kiếm gần đúng)</label>
+                <input type="text" v-model="searchForm.name" class="form-control" id="name" placeholder="Nhập tên">
+            </div>
+            <!-- Ngày sinh từ -->
+            <div class="col-md-4">
+                <label for="dobFrom" class="form-label">Ngày sinh từ</label>
+                <input type="date" v-model="searchForm.dobFrom" class="form-control" id="dobFrom">
+            </div>
+            <!-- Ngày sinh đến -->
+            <div class="col-md-4">
+                <label for="dobTo" class="form-label">Ngày sinh đến</label>
+                <input type="date" v-model="searchForm.dobTo" class="form-control" id="dobTo">
+            </div>
+        </div>
+
+        <!-- Hàng 2 -->
+        <div class="row mb-3">
+            <!-- Giới tính -->
+            <div class="col-md-4">
+                <label for="gender" class="form-label">Giới tính</label>
+                <select v-model="searchForm.gender" class="form-select" id="gender">
+                    <option value="" selected>Tất cả</option>
+                    <option value="male">Nam</option>
+                    <option value="female">Nữ</option>
+                </select>
+            </div>
+            <!-- Mức lương -->
+            <div class="col-md-4">
+                <label for="salary" class="form-label">Mức lương</label>
+                <select v-model="searchForm.salary" class="form-select" id="salary">
+                    <option value="" selected>Tất cả</option>
+                    <option value="low">Dưới 10 triệu</option>
+                    <option value="medium">10-20 triệu</option>
+                    <option value="high">Trên 20 triệu</option>
+                </select>
+            </div>
+            <!-- Số điện thoại -->
+            <div class="col-md-4">
+                <label for="phone" class="form-label">Số điện thoại (Tìm kiếm gần đúng)</label>
+                <input type="text" v-model="searchForm.phone" class="form-control" id="phone" placeholder="Nhập số điện thoại">
+            </div>
+        </div>
+
+        <!-- Hàng 3: Bộ phận -->
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label for="department" class="form-label">Bộ phận</label>
+                <select v-model="searchForm.department" class="form-select" id="department">
+                    <option value="" selected>Tất cả</option>
+                    <option value="hr">Nhân sự</option>
+                    <option value="it">Công nghệ thông tin</option>
+                    <option value="sales">Kinh doanh</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Nút bấm -->
+        <div class="d-flex gap-2">
+            <button type="reset" @click="onReset" class="btn btn-secondary">Đặt lại</button>
+            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        </div>
+    </form>
+</div>
   <div class="container mt-4">
     <h3 class="mb-4">Danh sách nhân viên</h3>
     <button class="btn btn-success mb-3" @click="openAddModal">+ Thêm Mới</button>
@@ -105,6 +177,7 @@ import { ref } from "vue";
 import axios from "axios";
 
 export default {
+  name: "App",
   setup() {
     const employees = ref([]);
     const showAddModal = ref(false);
@@ -112,6 +185,15 @@ export default {
     const showDetailsModal = ref(false);
     const selectedEmployee = ref({});
     const form = ref({ name: "", dob: "", gender: "", salary: 0, phone: "" });
+    const searchForm = ref({
+      name: "",
+      dobFrom: "",
+      dobTo: "",
+      gender: "",
+      salary: "",
+      phone: "",
+      department: "",
+    });
     const apiBaseUrl = `http://localhost:8080/employees`;
 
     const fetchEmployees = async () => {
@@ -199,6 +281,7 @@ export default {
       employees,
       form,
       selectedEmployee,
+      searchForm,  // Trả về searchForm để có thể sử dụng trong template
       showAddModal,
       showEditModal,
       showDetailsModal,
@@ -216,3 +299,4 @@ export default {
   },
 };
 </script>
+
