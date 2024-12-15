@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" addBOMForNewFiles="with BOM under Windows, with no BOM otherwise">
+    <file url="file://$PROJECT_DIR$/homework12-12/src/main/java/homework12/_2/Am/homework12/_2/controller/DepartmentController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/homework12-12/src/main/java/homework12/_2/Am/homework12/_2/controller/DictionaryController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/homework12-12/src/main/java/homework12/_2/Am/homework12/_2/dto/JsonResponse.java" charset="UTF-8" />
   </component>
 </project>
