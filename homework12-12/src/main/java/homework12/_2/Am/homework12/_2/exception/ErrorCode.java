@@ -1,4 +1,4 @@
-package homework12._2.Am.homework12._2.dto.exception;
+package homework12._2.Am.homework12._2.exception;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

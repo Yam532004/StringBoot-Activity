@@ -1,4 +1,4 @@
-package homework12._2.Am.homework12._2.model;
+package homework12._2.Am.homework12._2.modal;
 
 public class Dictionary {
     private String word;

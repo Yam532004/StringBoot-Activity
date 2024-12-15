@@ -1,11 +1,10 @@
-package homework12._2.Am.homework12._2.model;
+package homework12._2.Am.homework12._2.modal;
 
-import homework12._2.Am.homework12._2.dto.Gender;
+import homework12._2.Am.homework12._2.emums.Gender;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 
 @Getter
@@ -32,5 +31,6 @@ public class Employee {
         this.salary = salary;
         this.phone = phone;
     }
+
 }
 

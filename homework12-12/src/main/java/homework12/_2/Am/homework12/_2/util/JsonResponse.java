@@ -1,5 +1,6 @@
-package homework12._2.Am.homework12._2.dto;
+package homework12._2.Am.homework12._2.util;
 
+import homework12._2.Am.homework12._2.dto.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

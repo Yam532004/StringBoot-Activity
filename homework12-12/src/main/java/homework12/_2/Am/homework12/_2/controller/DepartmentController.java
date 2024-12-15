@@ -1,10 +1,9 @@
 package homework12._2.Am.homework12._2.controller;
 
-import homework12._2.Am.homework12._2.dto.ApiResponse;
-import homework12._2.Am.homework12._2.dto.JsonResponse;
-import homework12._2.Am.homework12._2.dto.exception.AppException;
-import homework12._2.Am.homework12._2.dto.exception.ErrorCode;
-import homework12._2.Am.homework12._2.model.Department;
+import homework12._2.Am.homework12._2.util.JsonResponse;
+import homework12._2.Am.homework12._2.exception.AppException;
+import homework12._2.Am.homework12._2.exception.ErrorCode;
+import homework12._2.Am.homework12._2.modal.Department;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -16,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/department")
+@RequestMapping("/departments")
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DepartmentController {
