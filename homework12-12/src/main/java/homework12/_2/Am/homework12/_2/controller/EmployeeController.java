@@ -77,4 +77,27 @@ public class EmployeeController {
                 })
                 .orElseThrow(()-> new AppException(ErrorCode.EMPLOYEE_NOT_EXIST));
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<?> searchEmployees(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "dobFrom", required = false) LocalDate dobFrom,
+            @RequestParam(value = "dobTo", required = false) LocalDate dobTo,
+            @RequestParam(value = "phone", required = false) String phone,
+            @RequestParam(value = "gender", required = false) Gender gender,
+            @RequestParam(value = "salary", required = false) Double salary,
+            @RequestParam(value = "department", required = false) Integer departmentId) {
+
+        List<Employee> filteredEmployees = employees.stream()
+                .filter(e -> (name == null || e.getName().toLowerCase().contains(name.toLowerCase())))
+                .filter(e -> (dobFrom == null || !e.getDob().isBefore(dobFrom)))
+                .filter(e -> (dobTo == null || !e.getDob().isAfter(dobTo)))
+                .filter(e -> (phone == null || e.getPhone().equals(phone)))
+                .filter(e -> (gender == null || e.getGender() == gender))
+                .filter(e -> (salary == null || e.getSalary().equals(salary)))
+                .filter(e -> (departmentId == null || e.getDepartmentId().equals(departmentId)))
+                .toList();
+
+        return JsonResponse.ok(filteredEmployees);
+    }
 }
