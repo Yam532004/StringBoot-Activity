@@ -83,6 +83,7 @@
           <th>Giới tính</th>
           <th>Lương</th>
           <th>SĐT</th>
+          <th>Bộ phận</th>
           <th>Thao tác</th>
         </tr>
       </thead>
@@ -94,6 +95,7 @@
           <td>{{ employee.gender }}</td>
           <td>{{ formatCurrency(employee.salary) }}</td>
           <td>{{ employee.phone }}</td>
+          <td>{{ employee.department }}</td>
           <td>
             <button class="btn btn-primary btn-sm me-1" @click="editEmployee(employee)">Cập nhật</button>
             <button class="btn btn-danger btn-sm me-1" @click="deleteEmployee(employee.id)">Xóa</button>
