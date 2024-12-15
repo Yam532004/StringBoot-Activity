@@ -18,7 +18,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/department")
 @AllArgsConstructor
-@CrossOrigin(value = "http://localhost:5173")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DepartmentController {
     private List<Department> departments = new ArrayList<>(
