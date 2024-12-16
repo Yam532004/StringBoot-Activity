@@ -4,6 +4,8 @@ import homework12._2.Am.homework12._2.dto.employee.EmployeeSearchRequest;
 import homework12._2.Am.homework12._2.emums.Gender;
 import homework12._2.Am.homework12._2.entity.Department;
 import homework12._2.Am.homework12._2.entity.Employee;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,7 +14,7 @@ import java.util.UUID;
 
 public interface IEmployeeService {
     // Tìm kiếm danh sách nhân viên dựa trên các tiêu chí
-    List<Employee> findByAttr(String name, Gender gender, LocalDate dob, Double minSalary, Double maxSalary, Department department);
+    Page<Employee> findByAttr(String name, Gender gender, LocalDate dob, Double minSalary, Double maxSalary, Department department, Pageable pageable);
 
     // Tìm nhân viên theo ID
     Optional<Employee> findById(UUID id);

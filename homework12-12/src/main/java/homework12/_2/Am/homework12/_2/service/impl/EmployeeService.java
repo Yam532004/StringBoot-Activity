@@ -3,12 +3,14 @@ package homework12._2.Am.homework12._2.service.impl;
 import homework12._2.Am.homework12._2.emums.Gender;
 import homework12._2.Am.homework12._2.entity.Department;
 import homework12._2.Am.homework12._2.service.IEmployeeService;
-import homework12._2.Am.homework12._2.dto.employee.EmployeeSearchRequest;
 import homework12._2.Am.homework12._2.entity.Employee;
 import homework12._2.Am.homework12._2.repository.IEmployeeRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,8 +24,8 @@ import java.util.UUID;
 public class EmployeeService implements IEmployeeService {
     IEmployeeRepository employeeRepository;
 
-    public List<Employee> findByAttr(String name, Gender gender, LocalDate dob, Double minSalary, Double maxSalary, Department department) {
-        return employeeRepository.findByAttr(name, gender, dob, minSalary, maxSalary, department);
+    public Page<Employee> findByAttr(String name, Gender gender, LocalDate dob, Double minSalary, Double maxSalary, Department department, Pageable pageable) {
+        return employeeRepository.findByAttr(name, gender, dob, minSalary, maxSalary, department, pageable);
     }
 
     @Override
@@ -38,6 +40,11 @@ public class EmployeeService implements IEmployeeService {
     @Override
     public void delete(UUID id) {
         employeeRepository.deleteById(id);
+    }
+
+    public Page<Employee> getEmployee(int page, int size) {
+        // PageRequest xác định trang và kích thước
+        return employeeRepository.findAll(PageRequest.of(page, size));
     }
 
 }
