@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IDepartmentService {
-    List<Department> findByAttributes(Department department);
+    List<Department> findByName(String name);
     Optional<Department> findById(int id);
     Department save(Department department);
     void delete(int id);

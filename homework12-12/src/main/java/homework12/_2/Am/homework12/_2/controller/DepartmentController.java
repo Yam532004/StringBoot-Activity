@@ -1,5 +1,7 @@
 package homework12._2.Am.homework12._2.controller;
 
+import homework12._2.Am.homework12._2.repository.IDepartmentRepository;
+import homework12._2.Am.homework12._2.service.IDepartmentService;
 import homework12._2.Am.homework12._2.util.JsonResponse;
 import homework12._2.Am.homework12._2.exception.AppException;
 import homework12._2.Am.homework12._2.exception.ErrorCode;
@@ -10,36 +12,25 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 @RestController
 @RequestMapping("/departments")
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DepartmentController {
-    private List<Department> departments = new ArrayList<>(
-            Arrays.asList(
-                    new Department(1, "Quản lý"),
-                    new Department(2, "Kế toán"),
-                    new Department(3, "Sale Marketing"),
-                    new Department(4, "Sản xuất")
-            )
-    );
+
+    IDepartmentService departmentService;
 
     @GetMapping
     public ResponseEntity getAll(){
         return JsonResponse.ok(
-                departments
+                departmentService
         );
     }
 
     @GetMapping("/{id}")
     public ResponseEntity <?> getById (@PathVariable("id") int id ) {
-        return departments.stream()
-                .filter(d -> d.getId() == id)
-                .findFirst()
+        return departmentService.findById(id)
                 .map(JsonResponse::ok)
                 .orElseThrow(()-> new AppException(ErrorCode.DEPARTMENT_NOT_EXIST));
     }
@@ -47,15 +38,13 @@ public class DepartmentController {
     @PostMapping
     public ResponseEntity<?> addDepart(@RequestBody Department department) {
         department.setId((int) (Math.random()*100000000));
-        departments.add(department);
+        departmentService.save(department);
         return JsonResponse.created(department);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateDepart(@PathVariable("id") int id, @RequestBody Department department) {
-        return departments.stream()
-                .filter(d -> d.getId() == id)
-                .findFirst()
+        return departmentService.findById(id)
                 .map(d -> {
                     d.setName(department.getName());
                     return JsonResponse.ok(d);
@@ -65,11 +54,9 @@ public class DepartmentController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteDepart(@PathVariable("id") int id) {
-        return departments.stream()
-                .filter(d -> d.getId() == id)
-                .findFirst()
+        return departmentService.findById(id)
                 .map(d -> {
-                    departments.remove(d);
+                    departmentService.delete(id);
                     return JsonResponse.noContent();
                 })
                 .orElseThrow(() -> new AppException(ErrorCode.DEPARTMENT_NOT_EXIST));

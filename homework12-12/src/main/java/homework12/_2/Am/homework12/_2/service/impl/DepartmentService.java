@@ -15,24 +15,26 @@ import java.util.Optional;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class DepartmentService implements IDepartmentService {
+
     IDepartmentRepository departmentRepository;
+
     @Override
-    public List<Department> findByAttributes (Department department) {
-        return departmentRepository.findByAttributes(department);
+    public List<Department> findByName(String name) {
+        return departmentRepository.findByName(name);
     }
+
     @Override
-    public Optional<Department> findById(int id){
+    public Optional<Department> findById(int id) {
         return departmentRepository.findById(id);
     }
+
     @Override
     public Department save(Department department) {
         return departmentRepository.save(department);
     }
+
     @Override
     public void delete(int id) {
-        departmentRepository.delete(id);
+        departmentRepository.deleteById(id); // use deleteById method to delete by ID
     }
-
-
-
 }
