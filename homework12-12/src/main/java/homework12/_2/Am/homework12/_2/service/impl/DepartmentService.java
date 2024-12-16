@@ -1,7 +1,7 @@
-package homework12._2.Am.homework12._2.Service.impl;
+package homework12._2.Am.homework12._2.service.impl;
 
-import homework12._2.Am.homework12._2.Service.IDepartmentService;
-import homework12._2.Am.homework12._2.modal.Department;
+import homework12._2.Am.homework12._2.service.IDepartmentService;
+import homework12._2.Am.homework12._2.entity.Department;
 import homework12._2.Am.homework12._2.repository.IDepartmentRepository;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor

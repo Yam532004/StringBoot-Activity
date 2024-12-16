@@ -1,6 +1,7 @@
-package homework12._2.Am.homework12._2.modal;
+package homework12._2.Am.homework12._2.entity;
 
 import homework12._2.Am.homework12._2.emums.Gender;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -13,7 +14,10 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Entity
 public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id ;
     private String name;
     private LocalDate dob;
@@ -21,16 +25,7 @@ public class Employee {
     private Double salary;
     private String phone;
 
-    Integer departmentId;
-
-    public Employee(UUID id, String name, LocalDate dob, Gender gender, Double salary, String phone) {
-        this.id = id;
-        this.name = name;
-        this.dob = dob;
-        this.gender = gender;
-        this.salary = salary;
-        this.phone = phone;
-    }
-
+    @ManyToOne
+    Department department;
 }
 

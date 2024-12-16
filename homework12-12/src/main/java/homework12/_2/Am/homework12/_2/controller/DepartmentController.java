@@ -3,7 +3,7 @@ package homework12._2.Am.homework12._2.controller;
 import homework12._2.Am.homework12._2.util.JsonResponse;
 import homework12._2.Am.homework12._2.exception.AppException;
 import homework12._2.Am.homework12._2.exception.ErrorCode;
-import homework12._2.Am.homework12._2.modal.Department;
+import homework12._2.Am.homework12._2.entity.Department;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;

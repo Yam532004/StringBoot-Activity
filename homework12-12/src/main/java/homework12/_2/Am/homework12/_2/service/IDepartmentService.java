@@ -1,6 +1,6 @@
-package homework12._2.Am.homework12._2.Service;
+package homework12._2.Am.homework12._2.service;
 
-import homework12._2.Am.homework12._2.modal.Department;
+import homework12._2.Am.homework12._2.entity.Department;
 
 import java.util.List;
 import java.util.Optional;

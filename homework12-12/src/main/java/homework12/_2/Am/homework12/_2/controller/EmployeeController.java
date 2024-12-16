@@ -1,14 +1,14 @@
 package homework12._2.Am.homework12._2.controller;
 
 
-import homework12._2.Am.homework12._2.Service.IEmployeeService;
-import homework12._2.Am.homework12._2.dto.employee.EmployeeSearchRequest;
 import homework12._2.Am.homework12._2.emums.Gender;
-import homework12._2.Am.homework12._2.repository.IEmployeeRepository;
+import homework12._2.Am.homework12._2.entity.Department;
+import homework12._2.Am.homework12._2.service.IEmployeeService;
+import homework12._2.Am.homework12._2.dto.employee.EmployeeSearchRequest;
 import homework12._2.Am.homework12._2.util.JsonResponse;
 import homework12._2.Am.homework12._2.exception.AppException;
 import homework12._2.Am.homework12._2.exception.ErrorCode;
-import homework12._2.Am.homework12._2.modal.Employee;
+import homework12._2.Am.homework12._2.entity.Employee;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -16,9 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -29,8 +26,8 @@ public class EmployeeController {
 
     IEmployeeService employeeService;
     @GetMapping
-    public ResponseEntity<?> getEmployees(EmployeeSearchRequest employeeSearchRequest) {
-        return JsonResponse.ok(employeeService.findByAttributes(employeeSearchRequest));
+    public ResponseEntity<?> getEmployees(String name, Gender gender, LocalDate dob, Double minSalary, Double maxSalary, Department department_id) {
+        return JsonResponse.ok(employeeService.findByAttr(name, gender, dob, minSalary, maxSalary, department_id));
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> getEmployeeByID(@PathVariable("id") UUID id) {
@@ -62,10 +59,6 @@ public class EmployeeController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) {
-        // Kiểm tra nhân viên có tồn tại hay không
-        employeeService.findById(id)
-                .orElseThrow(() -> new AppException(ErrorCode.EMPLOYEE_NOT_EXIST));
-
         // Xóa nhân viên
         employeeService.delete(id);
 
