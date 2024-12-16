@@ -25,6 +25,7 @@ public class EmployeeService implements IEmployeeService {
         return employeeRepository.findByAttributes(employeeSearchRequest);
     }
 
+    @Override
     public Optional<Employee> findById(UUID id){
         return employeeRepository.findById(id);
     }

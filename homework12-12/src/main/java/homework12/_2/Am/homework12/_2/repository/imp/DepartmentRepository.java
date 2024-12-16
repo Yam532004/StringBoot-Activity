@@ -1,6 +1,7 @@
 package homework12._2.Am.homework12._2.repository.imp;
 
 import homework12._2.Am.homework12._2.modal.Department;
+import homework12._2.Am.homework12._2.repository.IDepartmentRepository;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Repository;
@@ -12,7 +13,7 @@ import java.util.Optional;
 
 @Repository
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class DepartmentRepository {
+public class DepartmentRepository implements IDepartmentRepository {
     List<Department> departments = new ArrayList<>(
             Arrays.asList(
                     new Department(1, "Quản lý"),
