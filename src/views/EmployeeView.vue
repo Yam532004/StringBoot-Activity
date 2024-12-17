@@ -21,9 +21,9 @@
         <div class="col-md-4">
           <label for="gender" class="form-label">Giới tính</label>
           <select v-model="searchFilters.gender" class="form-select" id="gender">
-            <option value="">Tất cả</option>
             <option value="MALE">Nam</option>
             <option value="FEMALE">Nữ</option>
+            <option value="OTHER">Khác</option>
           </select>
         </div>
         <div class="col-md-4">
@@ -37,7 +37,8 @@
         </div>
         <div class="col-md-4">
           <label for="phone" class="form-label">Số điện thoại (Tìm kiếm gần đúng)</label>
-          <input type="text" v-model="searchFilters.phone" class="form-control" id="phone" placeholder="Nhập số điện thoại">
+          <input type="text" v-model="searchFilters.phone" class="form-control" id="phone"
+            placeholder="Nhập số điện thoại">
         </div>
       </div>
 
@@ -45,11 +46,11 @@
         <div class="col-md-4">
           <label for="department" class="form-label">Bộ phận</label>
           <select v-model="searchFilters.departmentId" class="form-select" id="department">
-            <option value="">Tất cả</option>
-            <option value="hr">Nhân sự</option>
-            <option value="it">Công nghệ thông tin</option>
-            <option value="sales">Kinh doanh</option>
+            <option v-for="department in departments" :key="department.id" :value="department.id">
+              {{ department.name }}
+            </option>
           </select>
+
         </div>
       </div>
 
@@ -84,7 +85,7 @@
           <td>{{ employee.gender }}</td>
           <td>{{ formatCurrency(employee.salary) }}</td>
           <td>{{ employee.phone }}</td>
-          <td>{{ getDepartmentName(employee.departmentId) }}</td>
+          <td>{{ employee.department.name }}</td>
           <td>
             <button class="btn btn-primary btn-sm me-1" @click="showUpdateForm(employee)">Cập nhật</button>
             <button class="btn btn-danger btn-sm me-1" @click="deleteEmployee(employee.id)">Xóa</button>
@@ -116,6 +117,7 @@
                 <select v-model="formData.gender" class="form-select" required>
                   <option value="MALE">Nam</option>
                   <option value="FEMALE">Nữ</option>
+                  <option value="OTHER">Khác</option>
                 </select>
               </div>
               <div class="mb-3">
@@ -126,6 +128,15 @@
                 <label class="form-label">SĐT</label>
                 <input type="text" v-model="formData.phone" class="form-control" required />
               </div>
+              <div class="mb-3">
+                <label for="department" class="form-label">Bộ phận</label>
+                <select v-model="formData.departmentId" class="form-select" id="department">
+                  <option v-for="department in departments" :key="department.id" :value="department.id">
+                    {{ department.name }}
+                  </option>
+                </select>
+              </div>
+
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" @click="closeForm">Hủy</button>
                 <button type="submit" class="btn btn-success">{{ formMode === 'add' ? 'Lưu' : 'Cập nhật' }}</button>
@@ -169,46 +180,78 @@ export default {
       showForm: false,
       formMode: 'add', // 'add' or 'update'
       formData: {
-        id: '',
         name: '',
         dob: '',
         gender: 'MALE',
         salary: 0,
-        phone: ''
+        phone: '',
+        department: ''
       },
       searchFilters: {
-        name: "",
-        dobFrom: "",
-        dobTo: "",
-        gender: "",
-        salaryRange: "",
-        phone: "",
-        departmentId: "",
+        name: '',
+        dobFrom: '',
+        dobTo: '',
+        gender: '',
+        salaryRange: '',
+        phone: '',
+        department: '',
       },
+
       departments: [
-      { id: 1, name: 'Nhân sự' },
-      { id: 2, name: 'Công nghệ thông tin' },
-      { id: 3, name: 'Kinh doanh' }
-    ],
+        { id: 1, name: 'Human Resources' },
+        { id: 2, name: 'Finance' },
+        { id: 3, name: 'IT' },
+        { id: 4, name: 'Marketing' },
+        { id: 5, name: 'Sales' },
+        { id: 6, name: 'Research and Development' },
+        { id: 7, name: 'Customer Service' }
+      ],
       showDetailModal: false,
       selectedEmployee: {},
     }
   },
   methods: {
-     // Phương thức tìm tên bộ phận từ departmentId
-     getDepartmentName(departmentId) {
+    mapSalaryRange(salaryRange) {
+      switch (salaryRange) {
+        case "low":
+          return { minSalary: null, maxSalary: 10000000 }; // Dưới 10 triệu
+        case "medium":
+          return { minSalary: 10000000, maxSalary: 20000000 }; // 10-20 triệu
+        case "high":
+          return { minSalary: 20000000, maxSalary: null }; // Trên 20 triệu
+        default:
+          return { minSalary: null, maxSalary: null }; // Tất cả
+      }
+    },
+    // Phương thức tìm tên bộ phận từ departmentId
+    getDepartmentName(departmentId) {
       const department = this.departments.find(dep => dep.id === departmentId);
       return department ? department.name : 'Không xác định';
     },
     async fetchEmployees() {
       const response = await axios.get('http://localhost:8080/employees');
-      this.employees = response.data;
+      this.employees = response.data.data.content;
+      console.log(response.data.data.content)
+      console.log(this.employees)
     },
+    // Search employees with filters
     async searchEmployees() {
-      const response = await axios.get('http://localhost:8080/employees/search', {
-        params: this.searchFilters
-      });
-      this.employees = response.data;
+      try {
+        const { salaryRange, ...otherFilters } = this.searchFilters;
+        const { minSalary, maxSalary } = this.mapSalaryRange(salaryRange);
+
+        const filters = {
+          ...otherFilters,
+          minSalary,
+          maxSalary,
+        };
+
+        const response = await axios.get('http://localhost:8080/employees', { params: filters });
+        this.employees = response.data.data.content;
+      } catch (error) {
+        console.error('Error searching employees:', error);
+        alert('Không thể tìm kiếm nhân viên.');
+      }
     },
     resetFilters() {
       this.searchFilters = {
@@ -218,7 +261,7 @@ export default {
         gender: '',
         salaryRange: '',
         phone: '',
-        departmentId: '',
+        department: '',
       };
       this.fetchEmployees();
     },
@@ -240,7 +283,9 @@ export default {
     },
     async handleSubmit() {
       if (this.formMode === 'add') {
+        console.log(this.formData);
         await axios.post('http://localhost:8080/employees', this.formData);
+        this.fetchEmployees(); // Cập nhật danh sách nhân viên sau khi thêm
       } else if (this.formMode === 'update') {
         await axios.put(`http://localhost:8080/employees/${this.formData.id}`, this.formData);
       }
