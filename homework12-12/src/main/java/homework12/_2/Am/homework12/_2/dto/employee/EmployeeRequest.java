@@ -1,7 +1,10 @@
-package homework12._2.Am.homework12._2.entity;
+package homework12._2.Am.homework12._2.dto.employee;
 
+import homework12._2.Am.homework12._2.dto.department.DepartmentRequest;
 import homework12._2.Am.homework12._2.emums.Gender;
-import jakarta.persistence.*;
+import homework12._2.Am.homework12._2.entity.Department;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -14,19 +17,15 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Entity
-public class Employee {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id ;
+public class EmployeeRequest {
     private String name;
     private LocalDate dob;
     private Gender gender;
     private Double salary;
     private String phone;
 
-    @ManyToOne
+    private DepartmentRequest department;  // DepartmentRequest chứa id
+    /* @ManyToOne
     @JoinColumn(name = "department_id", nullable = false)
-    Department department;
+    DepartmentRequest department; */
 }
-

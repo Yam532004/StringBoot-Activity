@@ -1,6 +1,6 @@
 CREATE TABLE employee
 (
-    id            BINARY(16)   NOT NULL,
+    id            INT   NOT NULL AUTO_INCREMENT,
     name          VARCHAR(255) NULL,
     dob           date NULL,
     gender        SMALLINT NULL,

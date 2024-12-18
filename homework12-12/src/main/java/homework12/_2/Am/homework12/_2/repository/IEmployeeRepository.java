@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface IEmployeeRepository extends JpaRepository<Employee, UUID> {
+public interface IEmployeeRepository extends JpaRepository<Employee, Integer> {
 
     @Query("SELECT e FROM Employee e WHERE " +
             "(:name IS NULL OR e.name LIKE %:name%) AND " +
@@ -30,10 +30,9 @@ public interface IEmployeeRepository extends JpaRepository<Employee, UUID> {
                               @Param("maxSalary") Double maxSalary,
                               @Param("department") Department department,
                               Pageable pageable);
-Optional<Employee> findById(UUID id);
+    Optional<Employee> findById(int id);
 
-        Employee save(Employee employee);
+    Employee save(Employee employee);
 
-        Page<Employee> findAll(Pageable pageable);
-
+    Page<Employee> findAll(Pageable pageable);
     }

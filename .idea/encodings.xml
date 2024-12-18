@@ -3,6 +3,7 @@
   <component name="Encoding" addBOMForNewFiles="with BOM under Windows, with no BOM otherwise">
     <file url="file://$PROJECT_DIR$/homework12-12/src/main/java/homework12/_2/Am/homework12/_2/controller/DepartmentController.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/homework12-12/src/main/java/homework12/_2/Am/homework12/_2/controller/DictionaryController.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/homework12-12/src/main/java/homework12/_2/Am/homework12/_2/dto/page/PageCustom.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/homework12-12/src/main/java/homework12/_2/Am/homework12/_2/util/JsonResponse.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/homework12-12/src/main/resources/db/migration/V1.0.1__create_employee_table.sql" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/homework12-12/src/main/resources/db/migration/V1.0.2__insert_employee.sql" charset="UTF-8" />

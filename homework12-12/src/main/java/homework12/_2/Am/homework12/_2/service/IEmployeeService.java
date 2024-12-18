@@ -17,13 +17,13 @@ public interface IEmployeeService {
     Page<Employee> findByAttr(String name, Gender gender, LocalDate dob, Double minSalary, Double maxSalary, Department department, Pageable pageable);
 
     // Tìm nhân viên theo ID
-    Optional<Employee> findById(UUID id);
+    Optional<Employee> findById(int id);
 
     // Lưu thông tin nhân viên
     Employee save(Employee employee);
 
     // Xóa nhân viên theo ID
-    void delete(UUID id);
+    void delete(int id);
 
 
 }
